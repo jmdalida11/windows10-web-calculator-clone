@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style type="text/css">
+        body {
+            margin: 0px;
+            padding: 0px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .main {
+            width: 450px;
+            height: 690px;
+            margin-top: 30px;
+            background-color: #1f1f1f;
+        }
+
+        .taskbar {
+            height: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            padding-bottom: 0px;
+            font-size: 20px;
+        }
+
+        .app_name {
+            color: white;
+        }
+
+        .controls {
+            color: white;
+        }
+
+        .standard {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .left_standard {
+            display: flex;
+            justify-content: space-between;
+            flex: 0.3;
+            align-items: center;
+        }
+
+        .righ_standard {
+            padding-right: 10px;
+        }
+
+        .compute {
+            color: white;
+            text-align: right;
+            padding: 25px;
+            padding-right: 20px;
+        }
+
+        #output {
+            font-size: 50px;
+        }
+
+        .ms {
+            color: white;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .ms_less {
+            opacity: 0.4;
+        }
+
+        .buttons {
+            color: white;
+        }
+
+        .row_buttons {
+            display: flex;
+            justify-content: space-around;
+            padding-left: 10px;
+            padding-right: 10px;
+            margin-top: 5px;
+        }
+
+        .button {
+            width: 100px;
+            height: 65px;
+            text-align: center;
+            vertical-align: middle;
+            background-color: #131313;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button_u {
+            background-color: #060606;
+        }
+
+        .button:hover {
+            background-color: #343434;
+        }
+
+        .equal {
+            background-color: #134369;
+        }
+
+        .equal:hover {
+            background-color: #036fc4;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="taskbar">
+            <div class="app_name">Calculator</div>
+            <div class="controls">
+                <span>&#9866;</span>
+                <span>&#9744;</span>
+                <span>&#9747;</span>
+            </div>
+        </div>
+        <div class="standard">
+            <div class="left_standard">
+                <span class="hamburger">&#9776;</span>
+                <h3>Standard</h3>
+                <span>&#10064;</span>
+            </div>
+            <div class="righ_standard">
+                <span class="fa fa-undo"></span>
+            </div>
+        </div>
+        <div class="compute">
+            <strong id="output">0</strong>
+        </div>
+        <div class="ms">
+            <p class="ms_less">MC</p>
+            <p class="ms_less">MR</p>
+            <p>M+</p>
+            <p>M-</p>
+            <p>MS</p>
+            <p class="ms_less">M<span class="fa fa-angle-down"></span></p>
+        </div>
+        <div class="buttons">
+            <div class="row_buttons">
+                <div class="button">%</div>
+                <div class="button">CE</div>
+                <div class="button" onclick="clearValue()">C</div>
+                <div class="button" onclick="backSpace()"><span class="fa fa-arrow-left"></span></div>
+            </div>
+            <div class="row_buttons">
+                <div class="button">1/x</div>
+                <div class="button">x2</div>
+                <div class="button">Sqr</div>
+                <div class="button" onclick="operator('/')">&#247;</div>
+            </div>
+            <div class="row_buttons">
+                <div class="button button_u" onclick="numClick('7')">7</div>
+                <div class="button button_u" onclick="numClick('8')">8</div>
+                <div class="button button_u" onclick="numClick('9')">9</div>
+                <div class="button"  onclick="operator('x')">&#9747;</span></div>
+            </div>
+            <div class="row_buttons">
+                <div class="button button_u" onclick="numClick('4')">4</div>
+                <div class="button button_u" onclick="numClick('5')">5</div>
+                <div class="button button_u" onclick="numClick('6')">6</div>
+                <div class="button"  onclick="operator('-')">&#9866;</div>
+            </div>
+            <div class="row_buttons">
+                <div class="button button_u" onclick="numClick('1')">1</div>
+                <div class="button button_u" onclick="numClick('2')">2</div>
+                <div class="button button_u" onclick="numClick('3')">3</div>
+                <div class="button"  onclick="operator('+')"><span class="fa fa-plus"></span></div>
+            </div>
+            <div class="row_buttons">
+                <div class="button button_u">+/-</div>
+                <div class="button button_u" onclick="numClick('0')">0</div>
+                <div class="button button_u" onclick="point()">.</div>
+                <div class="button equal" onclick="equal()">=</span></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        const output = document.getElementById('output');
+
+        function numClick(val) {
+            if (output.innerHTML == '0') {
+                output.innerHTML = val;
+                return;
+            }
+            output.append(val);
+        }
+
+        function operator(val) {
+            const outputValue = output.innerHTML;
+            if (outputValue == '0') return;
+            if ("/x+-".includes(outputValue[outputValue.length-1])) return;
+
+            output.append(val);
+        }
+
+        function point() {
+            const outputValue = output.innerHTML;
+
+            if (outputValue == '0') {
+                output.innerHTML = '0.';
+                return;
+            }
+
+            let num = "";
+            for (let i = outputValue.length-1; i >= 0; --i) {
+                if ("/x+-".includes(outputValue[i])) {
+                    break;
+                }
+                num += outputValue[i];
+            }
+
+            for (let i = 0; i < num.length; ++i) {
+                if (num[i] == '.') return;
+            }
+
+            output.append('.');
+        }
+
+        function clearValue() {
+            output.innerHTML = '0';
+        }
+
+        function backSpace() {
+            let outputValue = output.innerHTML;
+            if (outputValue != '0') {
+                outputValue = outputValue.split('');
+                outputValue.pop();
+                output.innerHTML = outputValue.join('');
+            }
+
+            if (output.innerHTML == '') {
+                output.innerHTML = '0';
+            }
+        }
+
+        function equal() {
+            output.innerHTML = solve(prefixToPostfix(output.innerHTML));
+        }
+
+        function solve(postfix) {
+            const stack = [];
+
+            for (const symbol of postfix) {
+                if ("/x-+".includes(symbol)) {
+                    let num1 = Number(stack.pop());
+                    let num2 = Number(stack.pop());
+
+                    if (symbol == '/') {
+                        stack.push(num2 / num1);
+                    } else if (symbol == 'x') {
+                        stack.push(num2 * num1);
+                    } else if (symbol == '+') {
+                         stack.push(num2 + num1);
+                    } else if (symbol == '-') {
+                         stack.push(num2 - num1);
+                    }
+
+                } else {
+                    stack.push(symbol);
+                }
+            }
+
+            return stack.pop();
+        }
+
+        function prefixToPostfix(prefix) {
+            const operatorValue = {"x": 2, "/": 2, "+": 1, "-": 1};
+            const postfix = [];
+            const stack = [];
+
+            if ("/x+-".includes(prefix[prefix.length-1])) {
+                prefix = prefix.substr(0, prefix.length-1);
+            }
+
+            let num = "";
+            for (const char of prefix) {
+                if ("/x+-".includes(char)) {
+                    postfix.push(num);
+                    num = "";
+
+                    while (stack.length && operatorValue[char] <= operatorValue[stack[stack.length-1]]) {
+                        postfix.push(stack.pop());
+                    }
+
+                    stack.push(char);
+
+                } else {
+                    num += char;
+                }
+            }
+
+            postfix.push(num);
+
+            while (stack.length) {
+                postfix.push(stack.pop());
+            }
+
+            return postfix;
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
